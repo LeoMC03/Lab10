@@ -31,6 +31,7 @@ public class EmployeeDao extends DaoBase {
                 Job job = new Job();
                 job.setJobId(rs.getString(7));
                 job.setJobTitle(rs.getString("job_title"));
+                job.setMaxSalary(rs.getInt("max_salary"));
 
                 employee.setJob(job);
                 employee.setSalary(rs.getBigDecimal(8));
@@ -61,7 +62,9 @@ public class EmployeeDao extends DaoBase {
 
         Employee employee = null;
 
-        String sql = "SELECT * FROM employees e WHERE employee_id = ?";
+        String sql = "SELECT * FROM employees e \n" +
+                "left join jobs j on (j.job_id = e.job_id)\n" +
+                "WHERE employee_id = ? ;";
 
         try (Connection conn = this.getConection();
              PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -81,6 +84,7 @@ public class EmployeeDao extends DaoBase {
 
                     Job job = new Job();
                     job.setJobId(rs.getString(7));
+                    job.setMaxSalary(rs.getInt("max_salary"));
                     employee.setJob(job);
 
                     employee.setSalary(rs.getBigDecimal(8));
@@ -211,4 +215,36 @@ public class EmployeeDao extends DaoBase {
         }
         pstmt.setInt(10, employee.getDepartment().getDepartmentId());
     }
+
+    public Employee validartop1usuario(int employee_id) {
+
+        Employee employee = null;
+
+
+        String sql = "Select * FROM (Select * FROM hr.employees e \n" +
+                "where e.employee_id in (SELECT e.employee_id FROM hr.employees e \n" +
+                "inner join departments d on (d.manager_id=e.employee_id)) or e.employee_id in (Select e.employee_id FROM hr.employees e \n" +
+                "inner join jobs j on (j.job_id=e.job_id)\n" +
+                "where j.max_salary >15000)) tabla\n" +
+                "where tabla.employee_id=?;";
+
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1, employee_id);
+
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    int employeeId = rs.getInt(1);
+                    employee = this.obtenerEmpleado(employeeId);
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return employee;
+    }
+
 }
