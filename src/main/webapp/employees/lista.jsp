@@ -19,7 +19,7 @@
                     <h1>Lista de empleados</h1>
                 </div>
                 <%
-                    Employee employeeSession = (Employee) session.getAttribute("employee");
+                    Employee employeeSession = (Employee) session.getAttribute("employeeSession");
                     if (employeeSession.getJob().getJobId().equals("AD_PRES")) {
                 %>
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">

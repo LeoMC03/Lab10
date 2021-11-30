@@ -36,20 +36,17 @@ public class EmployeeDao extends DaoBase {
                 employee.setSalary(rs.getBigDecimal(8));
                 employee.setCommissionPct(rs.getBigDecimal(9));
 
-                if (rs.getInt("e.manager_id") != 0) {
-                    Employee manager = new Employee();
-                    manager.setEmployeeId(rs.getInt("e.manager_id"));
-                    manager.setFirstName(rs.getString("m.first_name"));
-                    manager.setLastName(rs.getString("m.last_name"));
-                    employee.setManager(manager);
-                }
+                Employee manager = new Employee();
+                manager.setEmployeeId(rs.getInt("e.manager_id"));
+                manager.setFirstName(rs.getString("m.first_name"));
+                manager.setLastName(rs.getString("m.last_name"));
 
-                if (rs.getInt("e.department_id") != 0) {
-                    Department department = new Department();
-                    department.setDepartmentId(rs.getInt(11));
-                    department.setDepartmentName(rs.getString("d.department_name"));
-                    employee.setDepartment(department);
-                }
+                employee.setManager(manager);
+
+                Department department = new Department();
+                department.setDepartmentId(rs.getInt(11));
+                department.setDepartmentName(rs.getString("d.department_name"));
+                employee.setDepartment(department);
 
                 listaEmpleados.add(employee);
             }

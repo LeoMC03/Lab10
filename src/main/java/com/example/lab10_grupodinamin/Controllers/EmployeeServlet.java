@@ -31,8 +31,8 @@ public class EmployeeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Employee em = (Employee) session.getAttribute("employeeSession");
 
-        if (em == null) {
-            response.sendRedirect(request.getContextPath());
+        if (em == null && em.getEmployeeId() > 0) {
+            response.sendRedirect("LoginServlet");
         } else {
             String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
 
