@@ -6,6 +6,8 @@ public class JobHistory {
     private String fechaE;
     private String idJ;
     private int idD;
+    private Job job;
+    private Department department;
 
     public int getIdE() {
         return idE;
@@ -45,5 +47,21 @@ public class JobHistory {
 
     public void setIdD(int idD) {
         this.idD = idD;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

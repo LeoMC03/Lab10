@@ -99,31 +99,35 @@
                         <input type="submit" value="Guardar" class="btn btn-primary"/>
                     </form>
                 </div>
-
-                    <table class="table">
+                <%if(!listaHistorial.isEmpty()){%>
+                    <h5 class="text-center mt-2" >Historial laboral</h5>
+                    <table class="table mt-2">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Employee</th>
                                 <th scope="col">Start Date</th>
                                 <th scope="col">End Date</th>
-                                <th scope="col">Job ID</th>
-                                <th scope="col">Department ID</th>
+                                <th scope="col">Job Title</th>
+                                <th scope="col">Department Name</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <%for(JobHistory jobHistory:listaHistorial){%>
+                            <% int i=1;
+                                for(JobHistory jobHistory:listaHistorial){%>
+
                             <tr>
-                                <th scope="row">1</th>
-                                <td><%=jobHistory.getIdE()%></td>
+                                <th><%=i%></th>
                                 <td><%=jobHistory.getFechaE()%></td>
-                                <td><%=jobHistory.getFechaS()%></td>
-                                <td><%=jobHistory.getIdJ()%></td>
-                                <td><%=jobHistory.getIdD()%></td>
+                                <td><%=jobHistory.getFechaE()%></td>
+                                <td><%=jobHistory.getJob().getJobTitle()%></td>
+                                <td><%=jobHistory.getDepartment().getDepartmentName()%></td>
                             </tr>
-                            <%}%>
+                            <% i++;}%>
                         </tbody>
                     </table>
+                <%}else{%>
+                <h5 class="text-center mt-2">No presenta cambios laborales</h5>
+                <%}%>
 
             </div>
         </div>
