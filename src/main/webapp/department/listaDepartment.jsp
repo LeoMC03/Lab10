@@ -17,10 +17,13 @@
                 <div class="col-md-7">
                     <h1 class=''>Lista de Departamentos</h1>
                 </div>
+                <% if (session.getAttribute("top") != "- Top 3") {%>
+
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
                     <a href="<%= request.getContextPath()%>/DepartmentServlet?action=formCrear" class="btn btn-primary">
                         Crear Departamento</a>
                 </div>
+                <%}%>
             </div>
             <jsp:include page="../includes/infoMsgs.jsp"/>
             <table class="table">
@@ -44,20 +47,18 @@
                     </td>
                     <td><%=department.getLocation() == null ? "--" : department.getLocation().getCity()%>
                     </td>
-                    <% if (session.getAttribute("top") != "- Top 2") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/DepartmentServlet?action=editar&id=<%=department.getDepartmentId()%>">
                             Editar
                         </a>
                     </td>
-                    <%}%>
-
+                    <% if (session.getAttribute("top") != "- Top 3") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/DepartmentServlet?action=borrar&id=<%=department.getDepartmentId()%>">
                             Borrar
                         </a>
                     </td>
-
+                    <%}%>
                 </tr>
                 <%
                     }

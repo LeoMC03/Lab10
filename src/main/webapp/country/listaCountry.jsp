@@ -17,10 +17,13 @@
                 <div class="col-md-7">
                     <h1>Lista de Paises</h1>
                 </div>
+                <% if (session.getAttribute("top") != "- Top 3") {%>
+
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
                     <a href="<%= request.getContextPath()%>/CountryServlet?action=formCrear" class="btn btn-primary">
                         Crear País</a>
                 </div>
+                <%}%>
             </div>
             <jsp:include page="../includes/infoMsgs.jsp"/>
             <table class="table">
@@ -52,11 +55,14 @@
                         </a>
                     </td>
                     <%}%>
+
+                    <% if (session.getAttribute("top") != "- Top 3") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/CountryServlet?action=borrar&id=<%=country.getCountryId()%>">
                             Borrar
                         </a>
                     </td>
+                    <%}%>
                 </tr>
                 <%
                         i++;

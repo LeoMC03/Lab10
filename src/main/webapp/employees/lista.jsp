@@ -22,10 +22,13 @@
                     Employee employeeSession = (Employee) session.getAttribute("employeeSession");
                     if (employeeSession.getJob().getJobId().equals("AD_PRES")) {
                 %>
+                <% if (session.getAttribute("top") != "- Top 3") {%>
+
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
                     <a href="<%= request.getContextPath()%>/EmployeeServlet?action=agregar" class="btn btn-primary">
                         Agregar nuevo empleado</a>
                 </div>
+                <% } %>
                 <% } %>
             </div>
             <jsp:include page="../includes/infoMsgs.jsp"/>
