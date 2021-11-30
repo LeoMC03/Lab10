@@ -51,8 +51,12 @@ public class JobServlet extends HttpServlet {
                         view.forward(request, response);
                         break;
                     case "formCrear":
-                        view = request.getRequestDispatcher("jobs/newJob.jsp");
-                        view.forward(request, response);
+                        if (session.getAttribute("top") != "- Top 4" && session.getAttribute("top") != "- Top 3") {
+                            view = request.getRequestDispatcher("jobs/newJob.jsp");
+                            view.forward(request, response);
+                        }else{
+                            response.sendRedirect(request.getContextPath() + "/JobServlet");
+                        }
                         break;
                     case "editar":
                         jobId = request.getParameter("id");
@@ -94,19 +98,23 @@ public class JobServlet extends HttpServlet {
                         }
                         break;
                     case "borrar":
-                        jobId = request.getParameter("id");
-                        if (jobDao.obtenerTrabajo(jobId) != null) {
-                            try {
-                                jobDao.borrarTrabajo(jobId);
-                                request.getSession().setAttribute("msg", "Trabajo borrado exitosamente");
-                                response.sendRedirect(request.getContextPath() + "/JobServlet");
-                            } catch (SQLException e) {
-                                e.printStackTrace();
+                        if (session.getAttribute("top") != "- Top 3") {
+                            jobId = request.getParameter("id");
+                            if (jobDao.obtenerTrabajo(jobId) != null) {
+                                try {
+                                    jobDao.borrarTrabajo(jobId);
+                                    request.getSession().setAttribute("msg", "Trabajo borrado exitosamente");
+                                    response.sendRedirect(request.getContextPath() + "/JobServlet");
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                    request.getSession().setAttribute("err", "Error al borrar el trabajo");
+                                    response.sendRedirect(request.getContextPath() + "/JobServlet");
+                                }
+                            } else {
                                 request.getSession().setAttribute("err", "Error al borrar el trabajo");
                                 response.sendRedirect(request.getContextPath() + "/JobServlet");
                             }
-                        } else {
-                            request.getSession().setAttribute("err", "Error al borrar el trabajo");
+                        }else{
                             response.sendRedirect(request.getContextPath() + "/JobServlet");
                         }
                         break;

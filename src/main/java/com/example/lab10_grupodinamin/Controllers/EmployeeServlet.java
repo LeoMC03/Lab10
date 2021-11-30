@@ -49,12 +49,16 @@ public class EmployeeServlet extends HttpServlet {
                     view.forward(request, response);
                     break;
                 case "agregar":
-                    request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
-                    request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
-                    request.setAttribute("listaJefes", employeeDao.listarEmpleados());
+                    if (session.getAttribute("top") != "- Top 4" && session.getAttribute("top") != "- Top 3" && session.getAttribute("top") != "- Top 1" ) {
+                        response.sendRedirect("EmployeeServlet");
+                    }else{
+                        request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
+                        request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
+                        request.setAttribute("listaJefes", employeeDao.listarEmpleados());
 
-                    view = request.getRequestDispatcher("employees/formularioNuevo.jsp");
-                    view.forward(request, response);
+                        view = request.getRequestDispatcher("employees/formularioNuevo.jsp");
+                        view.forward(request, response);
+                    }
                     break;
                 case "editar":
                     JobHistoryDao jobHistoryDao = new JobHistoryDao();
@@ -71,7 +75,10 @@ public class EmployeeServlet extends HttpServlet {
 
                         Employee emp = employeeDao.obtenerEmpleado(employeeId);
 
-                        if (emp != null && session.getAttribute("top")!= "- Top 2") {
+                        if (emp == null || session.getAttribute("top").equals("- Top 2") || session.getAttribute("top").equals("- Top 4")) {
+                            response.sendRedirect("EmployeeServlet");
+                        } else {
+
                             request.setAttribute("listaHistorial",jobHistoryDao.listar(employeeId));
                             request.setAttribute("empleado", emp);
                             request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
@@ -79,8 +86,6 @@ public class EmployeeServlet extends HttpServlet {
                             request.setAttribute("listaJefes", employeeDao.listarEmpleados());
                             view = request.getRequestDispatcher("employees/formularioEditar.jsp");
                             view.forward(request, response);
-                        } else {
-                            response.sendRedirect("EmployeeServlet");
                         }
 
                     } else {
@@ -89,31 +94,34 @@ public class EmployeeServlet extends HttpServlet {
 
                     break;
                 case "borrar":
-                    if (request.getParameter("id") != null) {
-                        String employeeIdString = request.getParameter("id");
-                        int employeeId = 0;
-                        try {
-                            employeeId = Integer.parseInt(employeeIdString);
-                        } catch (NumberFormatException ex) {
+                    if (session.getAttribute("top") != "- Top 4" && session.getAttribute("top") != "- Top 3") {
+                        if (request.getParameter("id") != null) {
+                            String employeeIdString = request.getParameter("id");
+                            int employeeId = 0;
+                            try {
+                                employeeId = Integer.parseInt(employeeIdString);
+                            } catch (NumberFormatException ex) {
+                                response.sendRedirect("EmployeeServlet");
+                            }
+
+                            Employee emp = employeeDao.obtenerEmpleado(employeeId);
+
+                            if (emp != null) {
+                                try {
+                                    employeeDao.borrarEmpleado(employeeId);
+                                    request.getSession().setAttribute("err", "Empleado borrado exitosamente");
+                                } catch (SQLException e) {
+                                    request.getSession().setAttribute("err", "Error al borrar el empleado");
+                                    e.printStackTrace();
+                                }
+                                response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
+                            }
+                        } else {
                             response.sendRedirect("EmployeeServlet");
                         }
-
-                        Employee emp = employeeDao.obtenerEmpleado(employeeId);
-
-                        if (emp != null) {
-                            try {
-                                employeeDao.borrarEmpleado(employeeId);
-                                request.getSession().setAttribute("err", "Empleado borrado exitosamente");
-                            } catch (SQLException e) {
-                                request.getSession().setAttribute("err", "Error al borrar el empleado");
-                                e.printStackTrace();
-                            }
-                            response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
-                        }
-                    } else {
+                    }else{
                         response.sendRedirect("EmployeeServlet");
                     }
-
                     break;
                 case "est":
                     if (session.getAttribute("top") != "- Top 4") {

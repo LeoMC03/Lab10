@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
                 Employee empleado = employeeDao.obtenerEmpleado(id_employee);
                 if (emp != null){
                     session.setAttribute("top","- Top 1");
-                    response.sendRedirect(request.getContextPath() + "/EmployeeServlet?");
+                    response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
                 } else if (empleado.getJob().getMaxSalary() <= 15000 && emplo.getJob().getMaxSalary() > 8500) {
                     session.setAttribute("top","- Top 2");
                     response.sendRedirect(request.getContextPath() + "/JobServlet");
