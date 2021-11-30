@@ -4,6 +4,7 @@ import com.example.lab10_grupodinamin.Beans.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class JobHistoryDao extends DaoBase{
 
@@ -39,6 +40,54 @@ public class JobHistoryDao extends DaoBase{
             ex.printStackTrace();
         }
         return lista;
+    }
+
+    public String obtenerStartDate(int idjob, int id_employee) {
+        String endDate= new String();
+
+        String sql="select end_date\n" +
+                "from job_history\n" +
+                "where employee_id like ? and job_id like ?;";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1, id_employee);
+            pstmt.setInt(2, idjob);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+
+                    endDate=rs.getString(1);
+
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return endDate;
+    }
+
+
+    public void agregarJobHistory (int employee_id,String start_date, int job_id,int department_id) {
+
+
+        String sql="insert into job_history ( employee_id, start_date,end_date,job_id,department_id)\n" +
+                "values (?,?,now(),?,?);";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1, employee_id);
+            pstmt.setString(2, start_date);
+            pstmt.setInt(3, job_id);
+            pstmt.setInt(4, department_id);
+
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
 }

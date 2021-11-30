@@ -162,6 +162,8 @@ public class EmployeeServlet extends HttpServlet {
 
             String jobId = request.getParameter("job_id");
             Job job = new Job(jobId);
+            //System.out.println(jobId);
+            //System.out.println(e.getEmployeeId());
             e.setJob(job);
 
             String managerId = request.getParameter("manager_id");

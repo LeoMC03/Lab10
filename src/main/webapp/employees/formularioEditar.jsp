@@ -27,7 +27,7 @@
                     <h1 class='mb-3'>Editar usuario</h1>
                     <hr>
                     <jsp:include page="../includes/infoMsgs.jsp" />
-                    <form method="POST" action="EmployeeServlet">
+                    <form method="POST" action="EmployeeServlet" >
                         <input type="hidden" name="employee_id" value="<%= empleado.getEmployeeId()%>"/>
                         <div class="mb-3">
                             <label class="form-label" for="first_name">First Name</label>
