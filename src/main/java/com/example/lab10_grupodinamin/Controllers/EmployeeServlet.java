@@ -67,7 +67,7 @@ public class EmployeeServlet extends HttpServlet {
 
                         Employee emp = employeeDao.obtenerEmpleado(employeeId);
 
-                        if (emp != null) {
+                        if (emp != null && session.getAttribute("top")!= "- Top 2") {
                             request.setAttribute("empleado", emp);
                             request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
                             request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
@@ -131,7 +131,7 @@ public class EmployeeServlet extends HttpServlet {
         Employee em = (Employee) session.getAttribute("employeeSession");
 
         if (em == null) {
-            response.sendRedirect(request.getContextPath());
+            response.sendRedirect("EmployeeServlet");
         } else {
 
             Employee e = new Employee();
@@ -179,6 +179,10 @@ public class EmployeeServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/EmployeeServlet?action=editar");
                 }
             }
+
+
+
+
         }
     }
 

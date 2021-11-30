@@ -45,11 +45,13 @@
                     </td>
                     <td><%=country.getRegionId()%>
                     </td>
+                    <% if (session.getAttribute("top") != "- Top 2") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/CountryServlet?action=editar&id=<%=country.getCountryId()%>">
                             Editar
                         </a>
                     </td>
+                    <%}%>
                     <td>
                         <a href="<%=request.getContextPath()%>/CountryServlet?action=borrar&id=<%=country.getCountryId()%>">
                             Borrar

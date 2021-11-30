@@ -56,11 +56,13 @@
                     </td>
                     <td><%=job.getMaxSalary()%>
                     </td>
+                    <% if (session.getAttribute("top") != "- Top 2") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/JobServlet?action=editar&id=<%=job.getJobId()%>">
                             Editar
                         </a>
                     </td>
+                    <%}%>
                     <td>
                         <a href="<%=request.getContextPath()%>/JobServlet?action=borrar&id=<%=job.getJobId()%>">
                             Borrar

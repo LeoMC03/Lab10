@@ -78,12 +78,14 @@
                         </td>
                         <td><%= e.getDepartment().getDepartmentName()%>
                         </td>
+                        <% if (session.getAttribute("top") != "- Top 2") {%>
                         <td>
                             <a href="<%=request.getContextPath()%>/EmployeeServlet?action=editar&id=<%= e.getEmployeeId()%>"
                                type="button" class="btn btn-primary">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>
+                        <%}%>
                         <td>
                             <a onclick="return confirm('¿Estas seguro de borrar?');"
                                href="<%=request.getContextPath()%>/EmployeeServlet?action=editar&id=<%= e.getEmployeeId()%>"

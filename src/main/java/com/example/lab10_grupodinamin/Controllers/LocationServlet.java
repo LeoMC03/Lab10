@@ -73,7 +73,7 @@ public class LocationServlet extends HttpServlet {
                 case "editar":
                     locationId = Integer.parseInt(request.getParameter("id"));
                     location = locationDao.obtener(locationId);
-                    if (location == null) {
+                    if (location == null || session.getAttribute("top").equals("- Top 2")) {
                         response.sendRedirect(request.getContextPath() + "/LocationServlet");
                     } else {
                         request.setAttribute("listaPaises", countryDao.listar());

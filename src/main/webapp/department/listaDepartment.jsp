@@ -44,16 +44,20 @@
                     </td>
                     <td><%=department.getLocation() == null ? "--" : department.getLocation().getCity()%>
                     </td>
+                    <% if (session.getAttribute("top") != "- Top 2") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/DepartmentServlet?action=editar&id=<%=department.getDepartmentId()%>">
                             Editar
                         </a>
                     </td>
+                    <%}%>
+
                     <td>
                         <a href="<%=request.getContextPath()%>/DepartmentServlet?action=borrar&id=<%=department.getDepartmentId()%>">
                             Borrar
                         </a>
                     </td>
+
                 </tr>
                 <%
                     }

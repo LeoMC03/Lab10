@@ -54,11 +54,13 @@
                     </td>
                     <td><%=location.getCountry().getCountryName() %>
                     </td>
+                    <% if (session.getAttribute("top") != "- Top 2") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/LocationServlet?action=editar&id=<%=location.getLocationId()%>">
                             Editar
                         </a>
                     </td>
+                    <%}%>
                     <td>
                         <a href="<%=request.getContextPath()%>/LocationServlet?action=borrar&id=<%=location.getLocationId()%>">
                             Borrar

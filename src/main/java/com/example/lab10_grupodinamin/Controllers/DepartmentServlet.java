@@ -79,7 +79,7 @@ public class DepartmentServlet extends HttpServlet {
                 case "editar":
                     departmentId = Integer.parseInt(request.getParameter("id"));
                     department = departmentDao.obtener(departmentId);
-                    if (department == null) {
+                    if (department == null || session.getAttribute("top").equals("- Top 2")) {
                         response.sendRedirect(request.getContextPath() + "/DepartmentServlet");
                     } else {
                         request.setAttribute("listaLocations",locationDao.listar());

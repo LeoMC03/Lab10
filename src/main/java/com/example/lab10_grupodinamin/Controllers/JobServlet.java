@@ -56,7 +56,7 @@ public class JobServlet extends HttpServlet {
                 case "editar":
                     jobId = request.getParameter("id");
                     job = jobDao.obtenerTrabajo(jobId);
-                    if (job == null) {
+                    if (job == null || session.getAttribute("top").equals("- Top 2")) {
                         response.sendRedirect(request.getContextPath() + "/JobServlet");
                     } else {
                         request.setAttribute("job", job);

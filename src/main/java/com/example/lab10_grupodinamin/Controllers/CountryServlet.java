@@ -67,7 +67,7 @@ public class CountryServlet extends HttpServlet {
                 case "editar":
                     countryId = request.getParameter("id");
                     country = countryDao.obtener(countryId);
-                    if (country == null) {
+                    if (country == null || session.getAttribute("top").equals("- Top 2")) {
                         response.sendRedirect(request.getContextPath() + "/CountryServlet");
                     } else {
                         request.setAttribute("country", country);
