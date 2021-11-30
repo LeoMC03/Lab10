@@ -22,7 +22,7 @@ public class CountryServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         HttpSession session = request.getSession();
         Employee em = (Employee) session.getAttribute("employeeSession");
         if (em == null) {
@@ -37,7 +37,7 @@ public class CountryServlet extends HttpServlet {
 
             switch (action) {
                 case "formCrear":
-                    if (session.getAttribute("top") != "- Top 4") {
+                    if (session.getAttribute("top") != "- Top 4" && session.getAttribute("top") != "- Top 3") {
                         view = request.getRequestDispatcher("country/newCountry.jsp");
                         view.forward(request, response);
                     }else{
@@ -45,7 +45,7 @@ public class CountryServlet extends HttpServlet {
                     }
                     break;
                 case "crear":
-                    if (session.getAttribute("top") != "- Top 4") {
+                    if (session.getAttribute("top") != "- Top 4" && session.getAttribute("top") != "- Top 3") {
                         countryId = request.getParameter("id");
                         String countryName = request.getParameter("countryName");
                         System.out.println(countryName);
@@ -85,7 +85,7 @@ public class CountryServlet extends HttpServlet {
                     }
                     break;
                 case "borrar":
-                    if (session.getAttribute("top") != "- Top 4") {
+                    if (session.getAttribute("top") != "- Top 4" && session.getAttribute("top") != "- Top 3") {
                         countryId = request.getParameter("id");
                         if (countryDao.obtener(countryId) != null) {
                             countryDao.borrar(countryId);
