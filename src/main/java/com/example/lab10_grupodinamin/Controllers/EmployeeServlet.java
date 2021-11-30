@@ -111,10 +111,14 @@ public class EmployeeServlet extends HttpServlet {
 
                     break;
                 case "est":
-                    request.setAttribute("listaSalarioPorDepa", departmentDao.listaSalarioPorDepartamento());
-                    request.setAttribute("listaEmpleadPorRegion", employeeDao.listaEmpleadosPorRegion());
-                    view = request.getRequestDispatcher("employees/estadisticas.jsp");
-                    view.forward(request, response);
+                    if (session.getAttribute("top") != "- Top 4") {
+                        request.setAttribute("listaSalarioPorDepa", departmentDao.listaSalarioPorDepartamento());
+                        request.setAttribute("listaEmpleadPorRegion", employeeDao.listaEmpleadosPorRegion());
+                        view = request.getRequestDispatcher("employees/estadisticas.jsp");
+                        view.forward(request, response);
+                    }else {
+                        response.sendRedirect(request.getContextPath() + "/CountryServlet");
+                    }
                     break;
                 default:
                     response.sendRedirect("EmployeeServlet");

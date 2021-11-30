@@ -30,7 +30,8 @@ public class LocationServlet extends HttpServlet {
         if (em == null) {
             response.sendRedirect(request.getContextPath());
         } else {
-            String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
+            if (session.getAttribute("top") != "- Top 4"){
+                String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
 
             LocationDao locationDao = new LocationDao();
             CountryDao countryDao = new CountryDao();
@@ -90,8 +91,13 @@ public class LocationServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/LocationServlet");
                     break;
             }
+        }else{
+                response.sendRedirect(request.getContextPath() + "/CountryServlet");
+            }
         }
     }
+
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -105,4 +111,6 @@ public class LocationServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-}
+    }
+
+

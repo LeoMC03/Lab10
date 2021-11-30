@@ -17,7 +17,7 @@
                 <div class="col-md-7">
                     <h1 class=''>Lista de Departamentos</h1>
                 </div>
-                <% if (session.getAttribute("top") != "- Top 3") {%>
+                <% if (session.getAttribute("top") != "- Top 3" && session.getAttribute("top") != "- Top 4" ) {%>
 
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
                     <a href="<%= request.getContextPath()%>/DepartmentServlet?action=formCrear" class="btn btn-primary">
@@ -47,12 +47,14 @@
                     </td>
                     <td><%=department.getLocation() == null ? "--" : department.getLocation().getCity()%>
                     </td>
+                    <% if (session.getAttribute("top") != "- Top 2" && session.getAttribute("top") != "- Top 4") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/DepartmentServlet?action=editar&id=<%=department.getDepartmentId()%>">
                             Editar
                         </a>
                     </td>
-                    <% if (session.getAttribute("top") != "- Top 3") {%>
+                    <%}%>
+                    <% if (session.getAttribute("top") != "- Top 3" && session.getAttribute("top") != "- Top 4") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/DepartmentServlet?action=borrar&id=<%=department.getDepartmentId()%>">
                             Borrar

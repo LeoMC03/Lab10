@@ -17,7 +17,7 @@
                 <div class="col-md-7">
                     <h1>Lista de Paises</h1>
                 </div>
-                <% if (session.getAttribute("top") != "- Top 3") {%>
+                <% if (session.getAttribute("top") != "- Top 3" && session.getAttribute("top") != "- Top 4" ) {%>
 
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
                     <a href="<%= request.getContextPath()%>/CountryServlet?action=formCrear" class="btn btn-primary">
@@ -48,7 +48,7 @@
                     </td>
                     <td><%=country.getRegionId()%>
                     </td>
-                    <% if (session.getAttribute("top") != "- Top 2") {%>
+                    <% if (session.getAttribute("top") != "- Top 2" && session.getAttribute("top") != "- Top 4") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/CountryServlet?action=editar&id=<%=country.getCountryId()%>">
                             Editar
@@ -56,7 +56,7 @@
                     </td>
                     <%}%>
 
-                    <% if (session.getAttribute("top") != "- Top 3") {%>
+                    <% if (session.getAttribute("top") != "- Top 3" && session.getAttribute("top") != "- Top 4") {%>
                     <td>
                         <a href="<%=request.getContextPath()%>/CountryServlet?action=borrar&id=<%=country.getCountryId()%>">
                             Borrar

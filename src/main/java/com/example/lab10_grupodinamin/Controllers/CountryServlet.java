@@ -37,23 +37,32 @@ public class CountryServlet extends HttpServlet {
 
             switch (action) {
                 case "formCrear":
-                    view = request.getRequestDispatcher("country/newCountry.jsp");
-                    view.forward(request, response);
+                    if (session.getAttribute("top") != "- Top 4") {
+                        view = request.getRequestDispatcher("country/newCountry.jsp");
+                        view.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/CountryServlet");
+                    }
                     break;
                 case "crear":
-                    countryId = request.getParameter("id");
-                    String countryName = request.getParameter("countryName");
-                    System.out.println(countryName);
-                    BigDecimal regionId = new BigDecimal(request.getParameter("regionId"));
+                    if (session.getAttribute("top") != "- Top 4") {
+                        countryId = request.getParameter("id");
+                        String countryName = request.getParameter("countryName");
+                        System.out.println(countryName);
+                        BigDecimal regionId = new BigDecimal(request.getParameter("regionId"));
 
-                    country = countryDao.obtener(countryId);
+                        country = countryDao.obtener(countryId);
 
-                    if (country == null) {
-                        countryDao.crear(countryId, countryName, regionId);
-                    } else {
-                        countryDao.actualizar(countryId, countryName, regionId);
+                        if (country == null) {
+                            countryDao.crear(countryId, countryName, regionId);
+                        } else {
+                            countryDao.actualizar(countryId, countryName, regionId);
+                        }
+                        response.sendRedirect(request.getContextPath() + "/CountryServlet");
+
+                    }else {
+                        response.sendRedirect(request.getContextPath() + "/CountryServlet");
                     }
-                    response.sendRedirect(request.getContextPath() + "/CountryServlet");
                     break;
                 case "lista":
                     ArrayList<Country> lista = countryDao.listar();
@@ -67,7 +76,7 @@ public class CountryServlet extends HttpServlet {
                 case "editar":
                     countryId = request.getParameter("id");
                     country = countryDao.obtener(countryId);
-                    if (country == null || session.getAttribute("top").equals("- Top 2")) {
+                    if (country == null || session.getAttribute("top").equals("- Top 2") || session.getAttribute("top").equals("- Top 3") || session.getAttribute("top").equals("- Top 4")) {
                         response.sendRedirect(request.getContextPath() + "/CountryServlet");
                     } else {
                         request.setAttribute("country", country);
@@ -76,11 +85,16 @@ public class CountryServlet extends HttpServlet {
                     }
                     break;
                 case "borrar":
-                    countryId = request.getParameter("id");
-                    if (countryDao.obtener(countryId) != null) {
-                        countryDao.borrar(countryId);
+                    if (session.getAttribute("top") != "- Top 4") {
+                        countryId = request.getParameter("id");
+                        if (countryDao.obtener(countryId) != null) {
+                            countryDao.borrar(countryId);
+                        }
+                        response.sendRedirect(request.getContextPath() + "/CountryServlet");
+
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/CountryServlet");
                     }
-                    response.sendRedirect(request.getContextPath() + "/CountryServlet");
                     break;
             }
         }

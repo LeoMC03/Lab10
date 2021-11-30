@@ -21,12 +21,14 @@
                     Country
                 </a>
             </li>
+            <% if (session.getAttribute("top") != "- Top 4") {%>
             <li class="nav-item">
                 <a class="nav-link <%=currentPage.equals("loc") ? "active" : ""%>"
                    href="<%=request.getContextPath()%>/LocationServlet">
                     Location
                 </a>
             </li>
+            <%}%>
             <li class="nav-item">
                 <a class="nav-link <%=currentPage.equals("dep") ? "active" : ""%>"
                    href="<%=request.getContextPath()%>/DepartmentServlet">
@@ -39,6 +41,7 @@
                     Employees
                 </a>
             </li>
+            <% if (session.getAttribute("top") != "- Top 4") {%>
             <li class="nav-item">
                 <a class="nav-link <%=currentPage.equals("job") ? "active" : ""%>"
                    href="<%=request.getContextPath()%>/JobServlet">
@@ -51,6 +54,8 @@
                     Estadisticas
                 </a>
             </li>
+            <%}%>
+
             <li class="nav-item">
                 <span class="nav-link text-dark">
                     Bienvenido <%=employeeSession.getFirstName()%> <%=employeeSession.getLastName()%> <%=top%>(<a

@@ -22,7 +22,7 @@
                     Employee employeeSession = (Employee) session.getAttribute("employeeSession");
                     if (employeeSession.getJob().getJobId().equals("AD_PRES")) {
                 %>
-                <% if (session.getAttribute("top") != "- Top 3") {%>
+                <% if (session.getAttribute("top") != "- Top 3" || session.getAttribute("top") != "- Top 4" ) {%>
 
                 <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
                     <a href="<%= request.getContextPath()%>/EmployeeServlet?action=agregar" class="btn btn-primary">
@@ -81,7 +81,7 @@
                         </td>
                         <td><%= e.getDepartment().getDepartmentName()%>
                         </td>
-                        <% if (session.getAttribute("top") != "- Top 2") {%>
+                        <% if (session.getAttribute("top") != "- Top 2" && session.getAttribute("top") != "- Top 4") {%>
                         <td>
                             <a href="<%=request.getContextPath()%>/EmployeeServlet?action=editar&id=<%= e.getEmployeeId()%>"
                                type="button" class="btn btn-primary">
@@ -89,6 +89,7 @@
                             </a>
                         </td>
                         <%}%>
+                        <% if (session.getAttribute("top") != "- Top 3" && session.getAttribute("top") != "- Top 4") {%>
                         <td>
                             <a onclick="return confirm('¿Estas seguro de borrar?');"
                                href="<%=request.getContextPath()%>/EmployeeServlet?action=editar&id=<%= e.getEmployeeId()%>"
@@ -96,6 +97,7 @@
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
+                        <%}%>
                     </tr>
                     <%
                             i++;

@@ -76,7 +76,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/DepartmentServlet");
                 }else{
                     session.setAttribute("top","- Top 4");
-                    response.sendRedirect(request.getContextPath() + "/CountryServlet?");
+                    response.sendRedirect(request.getContextPath() + "/CountryServlet");
                 }
 
             } else {
