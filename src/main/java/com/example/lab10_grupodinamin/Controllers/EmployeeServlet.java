@@ -6,6 +6,7 @@ import com.example.lab10_grupodinamin.Beans.Job;
 import com.example.lab10_grupodinamin.Daos.DepartmentDao;
 import com.example.lab10_grupodinamin.Daos.EmployeeDao;
 import com.example.lab10_grupodinamin.Daos.JobDao;
+import com.example.lab10_grupodinamin.Daos.JobHistoryDao;
 
 
 import javax.servlet.RequestDispatcher;
@@ -56,8 +57,11 @@ public class EmployeeServlet extends HttpServlet {
                     view.forward(request, response);
                     break;
                 case "editar":
+                    JobHistoryDao jobHistoryDao = new JobHistoryDao();
+
                     if (request.getParameter("id") != null) {
                         String employeeIdString = request.getParameter("id");
+
                         int employeeId = 0;
                         try {
                             employeeId = Integer.parseInt(employeeIdString);
@@ -68,6 +72,7 @@ public class EmployeeServlet extends HttpServlet {
                         Employee emp = employeeDao.obtenerEmpleado(employeeId);
 
                         if (emp != null && session.getAttribute("top")!= "- Top 2") {
+                            request.setAttribute("listaHistorial",jobHistoryDao.listar(employeeId));
                             request.setAttribute("empleado", emp);
                             request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
                             request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());

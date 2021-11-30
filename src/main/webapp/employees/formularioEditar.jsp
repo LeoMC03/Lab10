@@ -2,12 +2,14 @@
 <%@ page import="com.example.lab10_grupodinamin.Beans.Employee" %>
 <%@ page import="com.example.lab10_grupodinamin.Beans.Department" %>
 <%@ page import="com.example.lab10_grupodinamin.Beans.Job" %>
+<%@ page import="com.example.lab10_grupodinamin.Beans.JobHistory" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <jsp:useBean id="empleado" type="com.example.lab10_grupodinamin.Beans.Employee" scope="request"/>
 <jsp:useBean scope="request" id="listaTrabajos" type="java.util.ArrayList<com.example.lab10_grupodinamin.Beans.Job>"/>
 <jsp:useBean id="listaDepartamentos" type="java.util.ArrayList<com.example.lab10_grupodinamin.Beans.Department>"
              scope="request"/>
 <jsp:useBean id="listaJefes" type="java.util.ArrayList<com.example.lab10_grupodinamin.Beans.Employee>" scope="request"/>
+<jsp:useBean id="listaHistorial" type="java.util.ArrayList<com.example.lab10_grupodinamin.Beans.JobHistory>" scope="request"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -97,7 +99,32 @@
                         <input type="submit" value="Guardar" class="btn btn-primary"/>
                     </form>
                 </div>
-                <div class="col-md-3"></div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Employee</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Job ID</th>
+                                <th scope="col">Department ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%for(JobHistory jobHistory:listaHistorial){%>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td><%=jobHistory.getIdE()%></td>
+                                <td><%=jobHistory.getFechaE()%></td>
+                                <td><%=jobHistory.getFechaS()%></td>
+                                <td><%=jobHistory.getIdJ()%></td>
+                                <td><%=jobHistory.getIdD()%></td>
+                            </tr>
+                            <%}%>
+                        </tbody>
+                    </table>
+
             </div>
         </div>
         <jsp:include page="../includes/footer.jsp"/>
